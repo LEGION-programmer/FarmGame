@@ -63,12 +63,11 @@ io.on('connection', (socket)=>{
         socket.emit('players-ready-to-play', playersArrayFromRoom)
     })
 
-    socket.on('get-player', (nickname:string, roomId: string)=>{
-        const playersInRoom = playersInGame.get(roomId)
-        console.log(playersInRoom)
+    socket.on('get-player', (data)=>{
+        const playersInRoom = playersInGame.get(data.roomId)
         playersInRoom?.forEach((el)=>{
-            if(el.nickname == nickname){
-                
+            if(el.nickname == data.nickname){
+                socket.emit('received-player', el)
             }
         })
     })

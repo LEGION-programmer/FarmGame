@@ -23,6 +23,11 @@ interface PrevPlayers {
 const PlayersInGame = () => {
     const [players, setPlayers] = useState<Player[]>([])
     const roomId:string = window.localStorage.getItem('roomId') || ''
+    const clientData = {
+        nickname: window.localStorage.getItem('nickname'),
+        roomId: window.localStorage.getItem('roomId')
+    }
+
     useEffect(()=>{
         socket.emit('get-players', roomId)
         socket.on('send-players-array', (playersArray:Array<PrevPlayers>):any=>{
@@ -35,6 +40,7 @@ const PlayersInGame = () => {
             socket.on('players-ready-to-play', (players:Array<Player>)=>{
                 setPlayers(players)
             })
+            socket.emit('get-player', clientData)
         })
     }, [socket])
 

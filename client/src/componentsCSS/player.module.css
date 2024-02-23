@@ -27,3 +27,36 @@
     font-size: 120%;
     margin: 5px;
 }
+
+.playerPulpit{
+    position: fixed;
+    bottom: 0;
+    margin: 10px;
+    width: 95%;
+    height: 300px;
+    background-color: #53391E;
+    border: 2px solid #F1BB87;
+    border-radius: 25px;
+}
+
+.playerSection{
+    width: 100%;
+    height: 100px;
+}
+
+.hr{
+    border: 2px dashed #F1BB87;
+}
+
+.animals{
+    display: flex;
+    justify-content: center;
+    width: 20%;
+    color: #AB9473;
+    margin: 5px;
+    float: left;
+}
+
+.notActive{
+    opacity: 0.3;
+}
