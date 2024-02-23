@@ -1,0 +1,134 @@
+@font-face {
+    font-family: nextSundey; 
+    src: url(Next\ Sunday.otf); 
+}
+
+*{
+    font-family: nextSundey;
+    margin: 0;
+    padding: 0;
+}
+
+.con{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.bg{
+    width: 80%;
+    background-color: #53391E;
+    margin: 10px;
+    padding: 10px;
+    border: 2px solid #F1BB87;
+    border-radius: 25px;
+    text-align: center;
+}
+
+.headerText{
+    color: #AB9473;
+    font-size: 160%;
+    margin: 7px;
+}
+
+.inputNick{
+    width: 70%;
+    height: 25px;
+    border: none;
+    background-color: #AB9473;
+    color: #53391E;
+    padding: 7px;
+    border-radius: 25px;
+    font-size: 120%;
+}
+
+.option{
+    border: 2px solid #F1BB87;
+    border-radius: 25px;
+    margin: 20px;
+    padding: 15px;
+}
+
+.inputRoom{
+    width: 50%;
+    height: 15px;
+    border: none;
+    background-color: #AB9473;
+    color: #53391E;
+    padding: 7px;
+    border-radius: 25px;
+    font-size: 110%;
+}
+
+.button{
+    font-size: 150%;
+    margin: 10px;
+    padding: 5px;
+    color: #F1BB87;
+    border-radius: 25px;
+    transition: 0.3s;
+}
+
+.button:hover{
+    background-color: #F1BB87;
+    color: #53391E;
+    cursor: pointer;
+}
+
+.footer{
+    position: absolute;
+    width: 80%;
+    background-color: #53391E;
+    margin: 10px;
+    padding: 10px;
+    border: 2px solid #F1BB87;
+    border-radius: 25px;
+    text-align: center;
+    bottom: 5px;
+}
+
+.footerText{
+    color: #AB9473;
+    font-size: 100%;
+    margin: 7px;
+}
+
+.mess{
+    color: #F1BB87;
+}
+
+.listElement{
+    list-style: none;
+}
+
+.rules{
+    position: absolute;
+    bottom: 5px;
+    width: 80%;
+    background-color: #53391E;
+    margin: 10px;
+    padding: 10px;
+    border: 2px solid #F1BB87;
+    border-radius: 25px;
+    text-align: center;
+}
+
+.rulesBg{
+    position: relative;
+    z-index: 2;
+    width: 80%;
+    background-color: #53391E;
+    margin: 10px;
+    padding: 10px;
+    border: 2px solid #F1BB87;
+    border-radius: 25px;
+    text-align: center;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.listInRules{
+    list-style: none;
+    color: #AB9473;
+    font-size: 100%;
+}

@@ -1,0 +1,35 @@
+.con{
+    display: flex;
+    max-height: 450px;
+    overflow-y: auto;
+}
+
+.bg{
+    width: 35%;
+    background-color: #53391E;
+    margin: 10px;
+    padding: 10px;
+    border: 2px solid #F1BB87;
+    border-radius: 25px;
+    text-align: center;
+}
+
+.bgForClient{
+    width: 35%;
+    background-color: #53391E;
+    margin: 10px;
+    padding: 10px;
+    border: 2px solid #f6ff00;
+    border-radius: 25px;
+    text-align: center;
+}
+
+.animals{
+    display: flex;
+    width: 40%;
+    float: left;
+}
+
+.notActive{
+    opacity: 0.3;
+}

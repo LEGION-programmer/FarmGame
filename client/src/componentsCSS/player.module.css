@@ -1,0 +1,29 @@
+.playerList{
+    width: 100%;
+    max-height: 650px;
+    overflow-y: auto;
+}
+
+.card{
+    width: 43%;
+    height: 45px;
+    background-color: #53391E;
+    border: 2px solid #F1BB87;
+    border-radius: 25px;
+    text-align: center;
+    margin: 10px;
+    float: left;
+}
+
+.nickname{
+    width: 100%;
+    color: #AB9473;
+    font-size: 120%;
+    margin: 5px;
+}
+
+.owner{
+    color: #f6ff00;
+    font-size: 120%;
+    margin: 5px;
+}
