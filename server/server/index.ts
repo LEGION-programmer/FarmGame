@@ -71,6 +71,11 @@ io.on('connection', (socket)=>{
             }
         })
     })
+
+    socket.on('send-dice-res', (data)=>{
+        socket.emit('roll-res-to-all-players', data.rollResult)
+        socket.to(data.roomId).emit('roll-res-to-all-players', data.rollResult)
+    })
 })
 
 server.listen(port, () => {

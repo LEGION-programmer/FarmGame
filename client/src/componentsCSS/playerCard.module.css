@@ -33,3 +33,78 @@
 .notActive{
     opacity: 0.3;
 }
+
+.playerActions{
+    display: flex;
+    justify-content: space-around;
+}
+
+.dice{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40%;
+    border: 2px solid #00ff55;
+    border-radius: 25px;
+    height: 50px;
+    padding: 7px;
+    margin: 15px;
+    font-size: 70%;
+    color: #F1BB87;
+    transition: 0.3s;
+}
+
+.pass{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40%;
+    border: 2px solid #ff0000;
+    border-radius: 25px;
+    height: 50px;
+    padding: 7px;
+    margin: 15px;
+    font-size: 70%;
+    color: #F1BB87;
+    transition: 0.3s;
+}
+
+.dice:hover{
+    cursor: pointer;
+    box-shadow: 0 0 20px #00ff55;
+}
+
+.pass:hover{
+    cursor: pointer;
+    box-shadow: 0 0 20px #ff0000;
+}
+
+.diceDisable{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40%;
+    border: 2px solid #00ff55;
+    border-radius: 25px;
+    height: 50px;
+    padding: 7px;
+    margin: 15px;
+    font-size: 70%;
+    color: #F1BB87;
+    opacity: 0.3;
+}
+
+.passDisable{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40%;
+    border: 2px solid #ff0000;
+    border-radius: 25px;
+    height: 50px;
+    padding: 7px;
+    margin: 15px;
+    font-size: 70%;
+    color: #F1BB87;
+    opacity: 0.3;
+}
