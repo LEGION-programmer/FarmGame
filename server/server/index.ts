@@ -7,6 +7,37 @@ const rooms: Array<string> = new Array()
 const players: Map<string, Array<object>> = new Map()
 const playersInGame: Map<string, Array<UserActions>> = new Map()
 
+const findPlayer = (roomId: string, playerId:number) => {
+    const playersArray = playersInGame.get(roomId)
+    const player = playersArray?.find(el => el.id === playerId)
+    return player
+}
+
+const addAnimals = (player:UserActions, firstAnimal:string, secondAnimal:string) => {
+    let animal
+    if(firstAnimal === secondAnimal){
+        switch (firstAnimal){
+            case 'rabbit':
+                animal = player.rabbits+2
+                animal = Math.floor(animal/2)
+                player.setRabbits(animal)
+                break
+            case 'sheep':
+                animal = player.sheeps+2
+                animal = Math.floor(animal/2)
+                player.setSheeps(animal)
+                break
+            case 'pig':
+                animal = player.sheeps+2
+                animal = Math.floor(animal/2)
+                player.setPigs(animal)
+                break
+        }
+    }
+}
+
+
+
 io.on('connection', (socket)=>{
     socket.on('check-room-id', (roomId:string, nickname:string)=>{
         if(rooms.includes(roomId)){
@@ -46,10 +77,12 @@ io.on('connection', (socket)=>{
     
     socket.on('game-start', (roomId:string, players:Array<string>)=>{
         const userActionsArray: Array<UserActions> = []
+        let playerId = 0
         players.forEach((el)=>{
-            const user = new UserActions(el, false, 1, 0, 0, 0, 0, false, false)
+            const user = new UserActions(playerId, el, false, 1, 0, 0, 0, 0, false, false)
             userActionsArray.push(user)
             playersInGame.set(roomId, userActionsArray)
+            playerId++
         })
         const playersArrayFromRoom = playersInGame.get(roomId)
 
@@ -75,6 +108,21 @@ io.on('connection', (socket)=>{
     socket.on('send-dice-res', (data)=>{
         socket.emit('roll-res-to-all-players', data.rollResult)
         socket.to(data.roomId).emit('roll-res-to-all-players', data.rollResult)
+    })
+
+    socket.on('player-pass', (playerId:number, roomId:string)=> {
+        const playersArrayFromRoom = playersInGame.get(roomId)
+        if(playersArrayFromRoom){
+            if(playerId === playersArrayFromRoom.length - 1){
+                playersArrayFromRoom[playerId].hisTour = false
+                playersArrayFromRoom[0].hisTour = true
+            }else{
+                playersArrayFromRoom[playerId].hisTour = false
+                playersArrayFromRoom[playerId + 1].hisTour = true
+            }
+            
+            socket.to(roomId).emit('update-users', playersArrayFromRoom)
+        }
     })
 })
 

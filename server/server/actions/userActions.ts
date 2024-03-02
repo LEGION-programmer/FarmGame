@@ -1,6 +1,7 @@
 import User from './createUser'
 
 class UserActions extends User{
+    public id: number
     public hisTour:boolean
     public rabbits: number
     public sheeps: number
@@ -10,9 +11,10 @@ class UserActions extends User{
     public smallDog: boolean
     public bigDog: boolean
 
-    public constructor(nickname:string, hisTour:boolean, rabbits:number, sheeps:number,  pigs: number,
+    public constructor(id:number, nickname:string, hisTour:boolean, rabbits:number, sheeps:number,  pigs: number,
         cows: number, horses: number, smallDog: boolean, bigDog: boolean){
             super(nickname, false)
+            this.id = id
             this.hisTour = hisTour
             this.rabbits = rabbits
             this.sheeps = sheeps

@@ -22,9 +22,6 @@ const AnimalExchange = () => {
             setPlayer(player)
         })
 
-        return () => {
-            socket.off('received-player')
-        }
     }, [socket])
 
     return (

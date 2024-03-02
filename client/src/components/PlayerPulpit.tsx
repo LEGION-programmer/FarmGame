@@ -19,18 +19,6 @@ interface Player {
 }
 
 const PlayerPulpit = () => {
-    const [player, setPlayer] = useState<Player | null>(null)
-
-    useEffect(() => {
-        socket.on('received-player', (player:Player)=>{
-            setPlayer(player)
-        })
-        
-        return () => {
-            socket.off('received-player')
-        }
-    }, [socket])
-
     return(
         <div className={AppCss.con}>
             <div className={PlayerCss.playerPulpit}>

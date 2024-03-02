@@ -42,6 +42,10 @@ const PlayersInGame = () => {
             })
             socket.emit('get-player', clientData)
         })
+
+        socket.on('update-users', (playersArray:Array<Player>)=>{
+            setPlayers(playersArray)
+        })
     }, [socket])
 
     return(

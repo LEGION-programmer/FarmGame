@@ -4,6 +4,7 @@ import PlayerCardCss from '../componentsCSS/playerCard.module.css'
 import AppCss from '../App.module.css'
 
 interface Player {
+    id: number
     nickname: string
     hisTour:boolean
     rabbits: number
@@ -17,6 +18,7 @@ interface Player {
 
 const PlayerActions = () => {
     const [player, setPlayer] = useState<Player | null>(null)
+    const [playerId, setPlayerId] = useState<number | null>(null)
     const [diceActive, setDiceActive] = useState(false)
     const [passActive, setPassActive] = useState(false)
     const firstDice = ['rabbit', 'rabbit', 'rabbit', 'rabbit', 'rabbit', 'rabbit', 'sheep', 'sheep', 'sheep', 'pig', 'cow', 'wolf']
@@ -30,8 +32,6 @@ const PlayerActions = () => {
         res.push(secondDice[secondRandomIndex])
         setPassActive(true)
         setDiceActive(false)
-        window.localStorage.setItem('rollResultFirst',res[0])
-        window.localStorage.setItem('rollResultSecond',res[1])
         if(player){
             player.hisTour=false
         }
@@ -40,19 +40,32 @@ const PlayerActions = () => {
     }
 
     const pass = () => {
-
+        socket.emit('player-pass', playerId, window.localStorage.getItem('roomId'))
+        setPassActive(false)
     }
 
     useEffect(() => {
         socket.on('received-player', (player:Player)=>{
-            setPlayer(player)
-            if(player.hisTour){
-                setDiceActive(true)
+            if(player){
+                setPlayer(player)
+                let id = player.id
+                window.localStorage.setItem('playerId', `${id}`)
+                setPlayerId(player.id)
+            }
+        }) 
+
+        socket.on('update-users', (playersArray:Array<Player>)=>{
+            if(playerId){
+                setPlayer(playersArray[playerId])
             }
         })
 
-    }, [socket])
+        if(player?.hisTour){
+            setDiceActive(true)
+        }
 
+    }, [socket, player])
+    
     return (
         <div className={PlayerCardCss.playerActions}>
             <div onClick={diceActive ? ()=>{rollDice()} : ()=>null}
