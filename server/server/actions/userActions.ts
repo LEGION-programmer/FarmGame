@@ -25,28 +25,24 @@ class UserActions extends User{
             this.bigDog = bigDog
         }
 
-    public setHisTour(hisTour:boolean){
-        this.hisTour = hisTour
-    }
-
     public setRabbits(rabbits:number){
-        this.rabbits = rabbits
+        this.rabbits += rabbits
     }
 
     public setSheeps(sheeps:number){
-        this.sheeps = sheeps
+        this.sheeps += sheeps
     }
 
     public setPigs(pigs:number){
-        this.pigs = pigs
+        this.pigs += pigs
     }
 
     public setCows(cows:number){
-        this.cows = cows
+        this.cows += cows
     }
 
     public setHorses(horses:number){
-        this.horses = horses
+        this.horses += horses
     }
 
     public setSmallDog(smallDog:boolean){
@@ -55,6 +51,36 @@ class UserActions extends User{
 
     public setBigDog(bigDog:boolean){
         this.bigDog = bigDog
+    }
+
+    public exchangeRabbitsToSheeps(){
+        this.rabbits -= 6
+        this.sheeps += 1
+    }
+
+    public exchangeSheepsToPigs(){
+        this.sheeps -= 2
+        this.pigs += 1
+    }
+
+    public exchangePigsToCows(){
+        this.pigs -= 3
+        this.cows += 1
+    }
+
+    public exchangeCowsToHorses(){
+        this.cows -= 2
+        this.horses += 1
+    }
+
+    public exchangeSheepsToSmallDog(){
+        this.sheeps -= 1
+        this.smallDog = true
+    }
+
+    public exchangeCowsToBigDog(){
+        this.cows -= 1
+        this.bigDog = true
     }
 }
 

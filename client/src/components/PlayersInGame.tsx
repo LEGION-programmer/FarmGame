@@ -5,6 +5,7 @@ import playerCss from "../componentsCSS/player.module.css"
 import AppStyle from "../App.module.css"
 
 interface Player {
+    id: number
     nickname: string
     hisTour:boolean
     rabbits: number
@@ -27,6 +28,10 @@ const PlayersInGame = () => {
         nickname: window.localStorage.getItem('nickname'),
         roomId: window.localStorage.getItem('roomId')
     }
+    
+    const updatePlayerData = (updatedPlayerData: Player[]) => {
+        setPlayers(updatedPlayerData)
+    }
 
     useEffect(()=>{
         socket.emit('get-players', roomId)
@@ -41,11 +46,13 @@ const PlayersInGame = () => {
                 setPlayers(players)
             })
             socket.emit('get-player', clientData)
+
+            socket.on('update-player-animals', (data:Player[])=>{
+
+                updatePlayerData(data)
+            })
         })
 
-        socket.on('update-users', (playersArray:Array<Player>)=>{
-            setPlayers(playersArray)
-        })
     }, [socket])
 
     return(

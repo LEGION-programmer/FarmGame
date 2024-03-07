@@ -3,6 +3,7 @@ import socket from "../socket"
 import PlayerCss from '../componentsCSS/player.module.css'
 
 interface Animals {
+    id: number
     rabbits: number,
     sheeps: number,
     pigs: number,
@@ -19,10 +20,18 @@ const PlayerAnimals = () => {
         socket.on('received-player', (player)=>{
             setPlayer(player)
         })
-
+        socket.on('update-player-animals', (data:Animals[])=>{
+            let newAnimals
+            data.forEach(element => {
+                if(element.id==Number(window.localStorage.getItem('playerId'))){
+                    newAnimals = element
+                }
+            })
+            setPlayer(newAnimals)
+        })
         
     }, [socket, player])
-
+    console.log(player)
     return (
         <div>
             {player ? (
@@ -49,14 +58,14 @@ const PlayerAnimals = () => {
                     </div>
                     <div className={PlayerCss.animals}>
                         <img src={require('../assets/smallDog.png')} alt="animal" 
-                        className={player.smallDog ? PlayerCss.animals : PlayerCss.notActive}/>
+                        className={player.smallDog ? PlayerCss.smallDog : PlayerCss.smallDogNotActive}/>
                     </div>
                     <div className={PlayerCss.animals}>
                         <img src={require('../assets/bigDog.png')} alt="animal" 
-                        className={player.bigDog ? PlayerCss.animals : PlayerCss.notActive}/>
+                        className={player.bigDog ? PlayerCss.bigDog : PlayerCss.bigDogNotActive}/>
                     </div>
                 </div>
-            ):null}  
+            ):null}
         </div>
     )
 }

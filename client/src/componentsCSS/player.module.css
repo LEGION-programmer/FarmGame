@@ -56,7 +56,7 @@
 .animals{
     display: flex;
     justify-content: center;
-    width: 20%;
+    width: 19%;
     color: #AB9473;
     margin: 7px;
     float: left;
@@ -76,7 +76,7 @@
     color: #AB9473;
     border: 2px solid #F1BB87;
     border-radius: 25px;
-    padding: 5px;
+    padding: 2px;
     margin: 5px;
     transition: 0.3s;
 }
@@ -88,7 +88,7 @@
     color: #AB9473;
     border: 2px solid #F1BB87;
     border-radius: 25px;
-    padding: 5px;
+    padding: 2px;
     margin: 5px;
     opacity: 0.5;
 }

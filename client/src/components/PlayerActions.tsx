@@ -35,7 +35,11 @@ const PlayerActions = () => {
         if(player){
             player.hisTour=false
         }
-        const data = {rollResult: res, roomId:window.localStorage.getItem('roomId')}
+        const data = {
+            rollResult:res, 
+            roomId: window.localStorage.getItem('roomId'),
+            playerId: Number(window.localStorage.getItem('playerId'))
+        }
         socket.emit('send-dice-res', data)
     }
 
@@ -55,8 +59,11 @@ const PlayerActions = () => {
         }) 
 
         socket.on('update-users', (playersArray:Array<Player>)=>{
-            if(playerId){
-                setPlayer(playersArray[playerId])
+            if (player) {
+                const updatedPlayer = playersArray.find(p => p.id === player.id);
+                if (updatedPlayer) {
+                    setPlayer(updatedPlayer);
+                }
             }
         })
 
@@ -64,8 +71,12 @@ const PlayerActions = () => {
             setDiceActive(true)
         }
 
+        if(!player?.hisTour){
+            setPassActive(false)
+        }
+
     }, [socket, player])
-    
+
     return (
         <div className={PlayerCardCss.playerActions}>
             <div onClick={diceActive ? ()=>{rollDice()} : ()=>null}

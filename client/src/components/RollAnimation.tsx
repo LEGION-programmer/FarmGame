@@ -16,19 +16,18 @@ const RollAnimation = () => {
         setAnimalsImage(animalArray)
         setStartAnimation(true)
     }
-    
+
     useEffect(()=>{
         socket.on('roll-res-to-all-players', (rollRes:Array<string>)=>{
             setRollRes(rollRes)
-        })
-        if(rollRes.length>0){
             setAnimals(rollRes)
+        })
+        if(startAnimation){
+            setTimeout(()=>{
+                setStartAnimation(false)
+            }, 2000)
         }
-        
-        return () => {
-            socket.off('roll-res-to-all-players')
-        }
-    }, [socket, rollRes])
+    }, [socket, startAnimation])
 
     return (
         <div>
