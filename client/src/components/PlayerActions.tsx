@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react"
 import socket from "../socket"
 import PlayerCardCss from '../componentsCSS/playerCard.module.css'
-import AppCss from '../App.module.css'
 
 interface Player {
     id: number
     nickname: string
-    hisTour:boolean
     rabbits: number
     sheeps: number
     pigs: number
@@ -14,6 +12,9 @@ interface Player {
     horses: number
     smallDog: boolean
     bigDog: boolean
+    rollDiceActive: boolean
+    passActive: boolean
+    exchangeActive: boolean
 }
 
 const PlayerActions = () => {
@@ -32,11 +33,8 @@ const PlayerActions = () => {
         res.push(secondDice[secondRandomIndex])
         setPassActive(true)
         setDiceActive(false)
-        if(player){
-            player.hisTour=false
-        }
         const data = {
-            rollResult:res, 
+            rollResult: ['rabbit', 'rabbit'], 
             roomId: window.localStorage.getItem('roomId'),
             playerId: Number(window.localStorage.getItem('playerId'))
         }
@@ -58,21 +56,24 @@ const PlayerActions = () => {
             }
         }) 
 
-        socket.on('update-users', (playersArray:Array<Player>)=>{
-            if (player) {
-                const updatedPlayer = playersArray.find(p => p.id === player.id);
-                if (updatedPlayer) {
-                    setPlayer(updatedPlayer);
-                }
+        socket.on('update-player-animals', (player:Player[])=>{
+           player.forEach((el)=>{
+            if(el.id === Number(window.localStorage.getItem('playerId'))){
+                setPlayer(el)
             }
+           })
         })
 
-        if(player?.hisTour){
+        socket.on('update-users', (player:Player)=>{
+            setPlayer(player)       
+        })
+
+        if(player?.rollDiceActive){
             setDiceActive(true)
         }
 
-        if(!player?.hisTour){
-            setPassActive(false)
+        if(player?.passActive){
+            setPassActive(true)
         }
 
     }, [socket, player])

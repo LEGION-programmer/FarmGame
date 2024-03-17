@@ -2,7 +2,8 @@ const port = process.env.port || 3001
 import { io, server } from './serverSettings/serverSettings'
 import User from './actions/createUser'
 import UserActions from './actions/userActions'
-import { rooms, players, playersInGame, findPlayer, addAnimals, changeTour, exchangeAnimals } from './actions/operations' 
+import { rooms, players, playersInGame, findPlayer, addAnimals, changeTour, 
+    exchangeAnimals, gameEnd } from './actions/operations' 
 
 
 io.on('connection', (socket)=>{
@@ -46,7 +47,7 @@ io.on('connection', (socket)=>{
         const userActionsArray: Array<UserActions> = []
         let playerId = 0
         players.forEach((el)=>{
-            const user = new UserActions(playerId, el, false, 1, 0, 0, 0, 0, false, false)
+            const user = new UserActions(playerId, el, 1, 0, 0, 0, 0, false, false, false, false, false)
             userActionsArray.push(user)
             playersInGame.set(roomId, userActionsArray)
             playerId++
@@ -56,7 +57,7 @@ io.on('connection', (socket)=>{
         if (playersArrayFromRoom) {
             if (playersArrayFromRoom.length > 0) {
                 const firstPlayer = playersArrayFromRoom[0]
-                firstPlayer.hisTour = true
+                firstPlayer.rollDiceActive = true
                 playersInGame.set(roomId, playersArrayFromRoom)
             } 
         }
@@ -76,9 +77,14 @@ io.on('connection', (socket)=>{
         const player:UserActions|null = findPlayer(data.roomId, data.playerId)
         if(player){
             addAnimals(player, data.rollResult[0], data.rollResult[1])
+            player.rollDiceActive = false
+            player.passActive = true
+            player.exchangeActive = true
         }
         const playersData:Array<object>|undefined = playersInGame.get(data.roomId)
-
+        if(gameEnd(player)){
+            socket.emit('game-end', player)
+        }
         socket.emit('update-player-animals', playersData)
         socket.to(data.roomId).emit('update-player-animals', playersData)
         socket.emit('roll-res-to-all-players', data.rollResult)
@@ -90,16 +96,20 @@ io.on('connection', (socket)=>{
         if(player){
             exchangeAnimals(data.option, player)
             const updateDate = changeTour(data.roomId, data.playerId)
+            if(gameEnd(player)){
+                socket.emit('game-end', player)
+                socket.to(data.roomId).emit('game-end', player)
+            }
             socket.emit('update-users', updateDate)
             socket.to(data.roomId).emit('update-users', updateDate)
-            socket.emit('update-player-animals', updateDate)
-            socket.to(data.roomId).emit('update-player-animals', updateDate)
+
         }
     })
 
     socket.on('player-pass', (playerId:number, roomId:string)=> {
         const updateDate = changeTour(roomId, playerId)
-        socket.to(roomId).emit('update-users', updateDate)
+        socket.emit('update-player-animals', updateDate)
+        socket.to(roomId).emit('update-player-animals', updateDate)
     })
 })
 

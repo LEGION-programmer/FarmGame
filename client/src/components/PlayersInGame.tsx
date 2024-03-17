@@ -48,8 +48,11 @@ const PlayersInGame = () => {
             socket.emit('get-player', clientData)
 
             socket.on('update-player-animals', (data:Player[])=>{
-
                 updatePlayerData(data)
+            })
+
+            socket.on('update-users', (player:Player[])=>{
+               setPlayers(player)
             })
         })
 
@@ -87,7 +90,7 @@ const PlayersInGame = () => {
                             <div className={player.smallDog ? playerCardCss.animals : playerCardCss.notActive}>
                                 <img src={require('../assets/smallDog.png')} alt="animal"  className={playerCardCss.image}/>
                             </div>
-                            <div className={player.smallDog ? playerCardCss.animals : playerCardCss.notActive}>
+                            <div className={player.bigDog ? playerCardCss.animals : playerCardCss.notActive}>
                                 <img src={require('../assets/bigDog.png')} alt="animal"  className={playerCardCss.image}/>
                             </div>
                         </div>

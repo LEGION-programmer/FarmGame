@@ -64,6 +64,14 @@
     border-radius: 25px;
 }
 
+.smallDogNotActive{
+    opacity: 0.3;
+}
+
+.bigDogNotActive{
+    opacity: 0.3;
+}
+
 .notActive{
     opacity: 0.3;
 }

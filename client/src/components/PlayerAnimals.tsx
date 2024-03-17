@@ -29,40 +29,49 @@ const PlayerAnimals = () => {
             })
             setPlayer(newAnimals)
         })
+
+        socket.on('update-users', (player:Animals[])=>{
+            player.forEach((el)=>{
+                if(el.id === Number(window.localStorage.getItem('playerId'))){
+                    setPlayer(el)
+                }
+            })
+        })
         
     }, [socket, player])
-    console.log(player)
+
     return (
         <div>
             {player ? (
+                
                 <div>
                     <div className={PlayerCss.animals}>
-                        <img src={require('../assets/rabbit.png')} alt="animal" className={PlayerCss.image}/>
+                        <img src={require('../assets/rabbit.png')} alt="animal"/>
                         <p>{player.rabbits}</p>
                     </div>
                     <div className={PlayerCss.animals}>
-                        <img src={require('../assets/sheep.png')} alt="animal" className={PlayerCss.image}/>
+                        <img src={require('../assets/sheep.png')} alt="animal"/>
                         <p>{player.sheeps}</p>
                     </div>
                     <div className={PlayerCss.animals}>
-                        <img src={require('../assets/pig.png')} alt="animal" className={PlayerCss.image}/>
+                        <img src={require('../assets/pig.png')} alt="animal"/>
                         <p>{player.pigs}</p>
                     </div>
                     <div className={PlayerCss.animals}>
-                        <img src={require('../assets/cow.png')} alt="animal" className={PlayerCss.image}/>
+                        <img src={require('../assets/cow.png')} alt="animal"/>
                         <p>{player.cows}</p>
                     </div>
                     <div className={PlayerCss.animals}>
-                        <img src={require('../assets/horse.png')} alt="animal" className={PlayerCss.image}/>
+                        <img src={require('../assets/horse.png')} alt="animal"/>
                         <p>{player.horses}</p>
                     </div>
                     <div className={PlayerCss.animals}>
                         <img src={require('../assets/smallDog.png')} alt="animal" 
-                        className={player.smallDog ? PlayerCss.smallDog : PlayerCss.smallDogNotActive}/>
+                        className={player.smallDog ? '' : PlayerCss.smallDogNotActive}/>
                     </div>
                     <div className={PlayerCss.animals}>
                         <img src={require('../assets/bigDog.png')} alt="animal" 
-                        className={player.bigDog ? PlayerCss.bigDog : PlayerCss.bigDogNotActive}/>
+                        className={player.bigDog ? '' : PlayerCss.bigDogNotActive}/>
                     </div>
                 </div>
             ):null}

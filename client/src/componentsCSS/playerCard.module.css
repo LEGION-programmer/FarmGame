@@ -30,27 +30,7 @@
     float: left;
 }
 
-.smallDog{
-    display: flex;
-    width: 40%;
-    float: left;
-}
-
-.bigDog{
-    display: flex;
-    width: 40%;
-    float: left;
-}
-
 .notActive{
-    opacity: 0.3;
-}
-
-.smallDogNotActive{
-    opacity: 0.3;
-}
-
-.bigDogNotActive{
     opacity: 0.3;
 }
 

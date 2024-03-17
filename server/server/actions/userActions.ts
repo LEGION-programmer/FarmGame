@@ -2,7 +2,6 @@ import User from './createUser'
 
 class UserActions extends User{
     public id: number
-    public hisTour:boolean
     public rabbits: number
     public sheeps: number
     public pigs: number
@@ -10,12 +9,15 @@ class UserActions extends User{
     public horses: number
     public smallDog: boolean
     public bigDog: boolean
+    public rollDiceActive: boolean
+    public passActive: boolean
+    public exchangeActive: boolean
 
-    public constructor(id:number, nickname:string, hisTour:boolean, rabbits:number, sheeps:number,  pigs: number,
-        cows: number, horses: number, smallDog: boolean, bigDog: boolean){
+    public constructor(id:number, nickname:string, rabbits:number, sheeps:number,  pigs: number,
+        cows: number, horses: number, smallDog: boolean, bigDog: boolean,
+        rollDiceActive: boolean, passActive: boolean, exchangeActive:boolean){
             super(nickname, false)
             this.id = id
-            this.hisTour = hisTour
             this.rabbits = rabbits
             this.sheeps = sheeps
             this.pigs = pigs
@@ -23,6 +25,9 @@ class UserActions extends User{
             this.horses = horses
             this.smallDog = smallDog
             this.bigDog = bigDog
+            this.rollDiceActive = rollDiceActive
+            this.passActive = passActive
+            this.exchangeActive = exchangeActive
         }
 
     public setRabbits(rabbits:number){
@@ -81,6 +86,29 @@ class UserActions extends User{
     public exchangeCowsToBigDog(){
         this.cows -= 1
         this.bigDog = true
+    }
+
+    public setExchangeActive(isActive:boolean){
+        this.exchangeActive = isActive
+    }
+
+    public checkFox(){
+        if(this.smallDog){
+            this.setSmallDog(false)
+        }else{
+            this.rabbits = 1
+        }
+    }
+
+    public checkWolf(){
+        if(this.bigDog){
+            this.setBigDog(false)
+        }else{
+            this.sheeps = 0
+            this.pigs = 0
+            this.cows= 0
+            this.horses = 0
+        }
     }
 }
 

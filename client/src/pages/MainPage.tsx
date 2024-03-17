@@ -87,7 +87,8 @@ const MainPage = () => {
       </main>
       <footer className={AppStyle.footer}>
         <p className={AppStyle.footerText}>
-          Copyright © {year} Tomasz Legion Kaczmarek
+          <a href="https://legion-blog.netlify.app/#/" target="_blank" className={AppStyle.href}>
+            Copyright © {year} Tomasz Legion Kaczmarek</a>
         </p>
       </footer>
     </div>

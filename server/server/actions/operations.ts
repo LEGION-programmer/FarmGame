@@ -25,7 +25,7 @@ export const addAnimals = (player:UserActions, firstAnimal:string, secondAnimal:
                 player.setSheeps(animal)
                 break
             case 'pig':
-                animal = player.sheeps+2
+                animal = player.pigs+2
                 animal = Math.floor(animal/2)
                 player.setPigs(animal)
                 break
@@ -53,14 +53,7 @@ export const addAnimals = (player:UserActions, firstAnimal:string, secondAnimal:
                 player.setCows(animal)
                 break
             case 'wolf':
-                if(player.bigDog){
-                    player.setBigDog(false)
-                }else{
-                    player.setSheeps(0)
-                    player.setPigs(0)
-                    player.setCows(0)
-                    player.setHorses(0)
-                }
+                player.checkWolf()
                 break
         }
         switch (secondAnimal){
@@ -85,11 +78,8 @@ export const addAnimals = (player:UserActions, firstAnimal:string, secondAnimal:
                 player.setHorses(animal)
                 break
             case 'fox':
-                if(player.smallDog){
-                    player.setSmallDog(false)
-                }else{
-                    player.setRabbits(1)
-                }
+                player.checkFox()
+                break
         }
     }
 }
@@ -98,11 +88,13 @@ export const changeTour = (roomId:string, playerId:number) => {
     const playersArrayFromRoom = playersInGame.get(roomId)
     if(playersArrayFromRoom){
         if(playerId == playersArrayFromRoom.length-1){
-            playersArrayFromRoom[playerId].hisTour = false
-            playersArrayFromRoom[0].hisTour = true
+            playersArrayFromRoom[playerId].passActive = false
+            playersArrayFromRoom[playerId].setExchangeActive(false)
+            playersArrayFromRoom[0].rollDiceActive = true
         }else{
-            playersArrayFromRoom[playerId].hisTour = false
-            playersArrayFromRoom[playerId + 1].hisTour = true
+            playersArrayFromRoom[playerId].passActive = false
+            playersArrayFromRoom[playerId].setExchangeActive(false)
+            playersArrayFromRoom[playerId + 1].rollDiceActive = true
         }
     }
     return playersArrayFromRoom
@@ -128,5 +120,16 @@ export const exchangeAnimals = (option:number, player:UserActions) => {
         case 6:
             player.exchangeCowsToBigDog()
             break
+    }
+}
+
+export const gameEnd = (player: UserActions | null) => {
+    if(player){
+        if(player.rabbits >= 1 && player.sheeps >= 1 && player.pigs >= 1
+        && player.cows >= 1 && player.horses >= 1){
+            return true
+        }else{
+            return false
+        }
     }
 }

@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect } from "react"
 import socket from "../socket"
 import PlayerCss from '../componentsCSS/player.module.css'
 
 interface Player {
     id: number
     nickname: string
-    hisTour:boolean
     rabbits: number
     sheeps: number
     pigs: number
@@ -13,6 +12,7 @@ interface Player {
     horses: number
     smallDog: boolean
     bigDog: boolean
+    exchangeActive: boolean
 }
 
 const AnimalExchange = () => {
@@ -31,42 +31,48 @@ const AnimalExchange = () => {
         socket.on('received-player', (player:Player)=>{
             setPlayer(player)
         })
-
-        socket.on('update-player-animals', (data:Player[])=>{
-            let newAnimals
-            data.forEach(element => {
-                if(element.id==Number(window.localStorage.getItem('playerId'))){
-                    newAnimals = element
+    
+        socket.on('update-player-animals', (player:Player[])=>{
+            player.forEach((el)=>{
+                if(el.id === Number(window.localStorage.getItem('playerId'))){
+                    setPlayer(el)
                 }
             })
-            setPlayer(newAnimals)
         })
-        
-    }, [socket])
 
+        socket.on('update-users', (player:Player[])=>{
+            player.forEach((el)=>{
+                if(el.id === Number(window.localStorage.getItem('playerId'))){
+                    setPlayer(el)
+                }
+            })
+        })
+
+    }, [socket, player])
+    
     return (
         <div>
             {player ? (
                 <div className={PlayerCss.con}>
-                    <div className={player.rabbits >= 6 && player.hisTour ? 
+                    <div className={player.rabbits >= 6 && player.exchangeActive ? 
                     PlayerCss.exchangeBox : PlayerCss.exchangeBoxDisable}
-                    onClick={player.rabbits >= 6 && player.hisTour ? 
+                    onClick={player.rabbits >= 6 && player.exchangeActive ? 
                     ()=>{exchangeAnimals(1)} : ()=>null}>
                         <img src={require('../assets/rabbit.png')} alt="animal" />
                         <p>6 &#x21d2; 1</p>
                         <img src={require('../assets/sheep.png')} alt="animal" />
                     </div>
-                    <div className={player.sheeps >= 2 && player.hisTour ? 
+                    <div className={player.sheeps >= 2 && player.exchangeActive ? 
                     PlayerCss.exchangeBox : PlayerCss.exchangeBoxDisable}
-                    onClick={player.sheeps >= 2 && player.hisTour ? 
+                    onClick={player.sheeps >= 2 && player.exchangeActive ? 
                     ()=>{exchangeAnimals(2)} : ()=>null}>
                         <img src={require('../assets/sheep.png')} alt="animal" />
                         <p>2 &#x21d2; 1</p>
                         <img src={require('../assets/pig.png')} alt="animal" />
                     </div>
-                    <div className={player.pigs >= 3 && player.hisTour ? 
+                    <div className={player.pigs >= 3 && player.exchangeActive ? 
                     PlayerCss.exchangeBox : PlayerCss.exchangeBoxDisable}
-                    onClick={player.pigs >= 3 && player.hisTour ? 
+                    onClick={player.pigs >= 3 && player.exchangeActive ? 
                     ()=>{exchangeAnimals(3)} : ()=>null}>
                         <img src={require('../assets/pig.png')} alt="animal" />
                         <p>3 &#x21d2; 1</p>
@@ -76,25 +82,25 @@ const AnimalExchange = () => {
             ):null}
              {player ? (
                 <div className={PlayerCss.con}>
-                    <div className={player.cows >= 2 && player.hisTour ? 
+                    <div className={player.cows >= 2 && player.exchangeActive ? 
                     PlayerCss.exchangeBox : PlayerCss.exchangeBoxDisable}
-                    onClick={player.cows >= 2 && player.hisTour ? 
+                    onClick={player.cows >= 2 && player.exchangeActive ? 
                     ()=>{exchangeAnimals(4)} : ()=>null}>
                         <img src={require('../assets/cow.png')} alt="animal" />
                         <p>2 &#x21d2; 1</p>
                         <img src={require('../assets/horse.png')} alt="animal" />
                     </div>
-                    <div className={player.sheeps >= 1 && player.hisTour ? 
+                    <div className={player.sheeps >= 1 && player.exchangeActive && !player.smallDog ? 
                     PlayerCss.exchangeBox : PlayerCss.exchangeBoxDisable}
-                    onClick={player.sheeps >= 1 && player.hisTour && !player.smallDog? 
+                    onClick={player.sheeps >= 1 && player.exchangeActive && !player.smallDog? 
                     ()=>{exchangeAnimals(5)} : ()=>null}>
                         <img src={require('../assets/sheep.png')} alt="animal" />
                         <p>1 &#x21d2; 1</p>
                         <img src={require('../assets/smallDog.png')} alt="animal" />
                     </div>
-                    <div className={player.cows >= 1 && player.hisTour ? 
+                    <div className={player.cows >= 1 && player.exchangeActive && !player.bigDog ? 
                     PlayerCss.exchangeBox : PlayerCss.exchangeBoxDisable}
-                    onClick={player.cows >= 1 && player.hisTour && !player.bigDog? 
+                    onClick={player.cows >= 1 && player.exchangeActive && !player.bigDog? 
                     ()=>{exchangeAnimals(6)} : ()=>null}>
                         <img src={require('../assets/cow.png')} alt="animal" />
                         <p>1 &#x21d2; 1</p>

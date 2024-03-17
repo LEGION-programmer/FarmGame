@@ -1,22 +1,9 @@
-import React, { useState, useEffect } from "react"
+import React from "react"
 import AppCss from '../App.module.css'
 import PlayerCss from '../componentsCSS/player.module.css'
-import socket from "../socket"
 import PlayerAnimals from "./PlayerAnimals"
 import AnimalExchange from "./AnimalExchange"
 import PlayerActions from "./PlayerActions"
-
-interface Player {
-    nickname: string
-    hisTour:boolean
-    rabbits: number
-    sheeps: number
-    pigs: number
-    cows: number
-    horses: number
-    smallDog: boolean
-    bigDog: boolean
-}
 
 const PlayerPulpit = () => {
     return(
