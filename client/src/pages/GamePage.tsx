@@ -7,13 +7,14 @@ import socket from "../socket"
 
 const GamePage = () => {
     const [ifGameEnd, setIfGameEnd] = useState(false)
+    const [winnerNickname, setWinnerNickname] = useState<string>('')
 
     useEffect(()=>{
-        socket.on('game-end', (player)=>{
+        socket.on('game-end', (player:any)=>{
             if(player){
                 setIfGameEnd(true)
+                setWinnerNickname(player.nickname)
             }
- 
         })
 
     }, [socket])
@@ -34,7 +35,7 @@ const GamePage = () => {
             </div>
             ):(
                 <div>
-                    <GameEnd />
+                    <GameEnd winnerNickname={winnerNickname}/>
                 </div>
             )}
         </div>

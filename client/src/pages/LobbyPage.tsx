@@ -29,12 +29,14 @@ const LobbyPage = () => {
         navigate('/game')
     }
     const handleReceivePlayers = (playersArray: Player[]) => {
+        if(Array.isArray(playersArray)){
         setPlayersList(prevPlayers => {
-            const newPlayers = playersArray.filter(newPlayer => 
+                const newPlayers = playersArray.filter(newPlayer => 
                 !prevPlayers.some(prevPlayer => prevPlayer.nickname === newPlayer.nickname)
-            );
-            return newPlayers.length > 0 ? [...prevPlayers, ...newPlayers] : prevPlayers;
-        });
+                )
+                return newPlayers.length > 0 ? [...prevPlayers, ...newPlayers] : prevPlayers
+            })
+        }
     }
 
     useEffect(() => {   

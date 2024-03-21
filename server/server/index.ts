@@ -84,6 +84,7 @@ io.on('connection', (socket)=>{
         const playersData:Array<object>|undefined = playersInGame.get(data.roomId)
         if(gameEnd(player)){
             socket.emit('game-end', player)
+            socket.to(data.roomId).emit('game-end', player)
         }
         socket.emit('update-player-animals', playersData)
         socket.to(data.roomId).emit('update-player-animals', playersData)
@@ -110,6 +111,25 @@ io.on('connection', (socket)=>{
         const updateDate = changeTour(roomId, playerId)
         socket.emit('update-player-animals', updateDate)
         socket.to(roomId).emit('update-player-animals', updateDate)
+    })
+
+    socket.on('player-leave', (data)=>{
+        const playersArr:Array<UserActions>|undefined = playersInGame.get(data.roomId)
+        if(playersArr){
+            if(data.isOwner){
+                playersInGame.delete(data.roomId)
+                players.delete(data.roomId)
+                socket.emit('owner-leave', true)
+                socket.to(data.roomId).emit('owner-leave', true)
+            }else{
+                const player:number = playersArr.findIndex(el=>el.id===data.playerId)
+                    playersArr.splice(player, 1)
+                    playersInGame.set(data.roomId, playersArr)
+                    players.set(data.roomId, playersArr)
+                    socket.emit('send-players-array', players)
+                    socket.to(data.roomId).emit('send-players-array', players)
+            }
+        }
     })
 })
 

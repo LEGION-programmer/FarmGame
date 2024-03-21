@@ -37,9 +37,11 @@ const PlayersInGame = () => {
         socket.emit('get-players', roomId)
         socket.on('send-players-array', (playersArray:Array<PrevPlayers>):any=>{
             const playersNicknames:Array<string> = []
-            playersArray.forEach((el)=>{
-                playersNicknames.push(el.nickname)
-            })
+            if(Array.isArray(playersArray)){
+                playersArray.map((el)=>{
+                    playersNicknames.push(el.nickname)
+                })
+            }
 
             socket.emit('game-start', window.localStorage.getItem('roomId'), playersNicknames)
             socket.on('players-ready-to-play', (players:Array<Player>)=>{
