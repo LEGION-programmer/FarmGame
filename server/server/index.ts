@@ -1,5 +1,31 @@
 const port = process.env.port || 3001
-import { io, server } from './serverSettings/serverSettings'
+import express from 'express'
+import http from 'http'
+import cors from 'cors'
+import { Server } from 'socket.io'
+import bodyParser from 'body-parser'
+const app = express()
+const corsOptions = {
+    origin: 'https://main--farm-game-multiplayer.netlify.app',
+    methods: ["POST", "GET", "PUT"],
+    credentials: true
+}
+app.use(cors(corsOptions))
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', 'https://main--farm-game-multiplayer.netlify.app')
+    next()
+})
+const server = http.createServer(app)
+
+
+
+
+app.use(bodyParser.text)
+app.use(bodyParser.json)
+
+const io = new Server(server, {
+    cors: corsOptions
+})
 import User from './actions/createUser'
 import UserActions from './actions/userActions'
 import { rooms, players, playersInGame, findPlayer, addAnimals, changeTour, 
