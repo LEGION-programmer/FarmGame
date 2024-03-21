@@ -7,7 +7,7 @@ const app = express()
 export const server = http.createServer(app)
 
 const corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: '*',
     methods: ["POST", "GET", "PUT"],
     credentials: true
 }
