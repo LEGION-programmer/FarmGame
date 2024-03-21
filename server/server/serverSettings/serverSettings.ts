@@ -11,7 +11,7 @@ app.use((req, res, next) => {
 export const server = http.createServer(app)
 
 const corsOptions = {
-    origin: '*',
+    origin: 'https://main--farm-game-multiplayer.netlify.app',
     methods: ["POST", "GET", "PUT"],
     credentials: true
 }
