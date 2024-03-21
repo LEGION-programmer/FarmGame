@@ -31,7 +31,7 @@ const MainPage = () => {
         createRoom()
       }
     })
-    console.log('dsadsa')
+
     socket.on("join-room-res", ({ validationStatus, mess }) => {
       if (validationStatus) {
         window.localStorage.setItem("roomId", roomId)
