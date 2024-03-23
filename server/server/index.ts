@@ -10,20 +10,19 @@ import { rooms, players, playersInGame, findPlayer, addAnimals, changeTour,
 const app = express()
 const port = process.env.PORT || 3001
 
-const corsOptions = {
-    origin: 'https://main--farm-game-multiplayer.netlify.app',
-    methods: ["POST", "GET", "PUT"],
-    credentials: true
-}
+app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    next();
+  });
 
-app.use(cors(corsOptions))
+
 app.use(bodyParser.text())
 app.use(bodyParser.json())
 
 const server = http.createServer(app);
-const io = new Server(server, {
-    cors: corsOptions
-})
+const io = new Server(server)
 
 io.on('connection', (socket)=>{
     socket.on('check-room-id', (roomId:string, nickname:string)=>{
