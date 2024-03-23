@@ -21,7 +21,7 @@ const GameEnd = ({winnerNickname}: any) => {
         window.localStorage.clear()
         navigate('/')
     }
-
+    window.addEventListener('beforeunload', ()=>{leaveTheGame()})
     useEffect(()=>{
         socket.on('owner-leave', (ownerLeave:boolean)=>{
             if(ownerLeave){

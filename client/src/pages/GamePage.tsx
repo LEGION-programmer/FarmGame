@@ -9,6 +9,18 @@ const GamePage = () => {
     const [ifGameEnd, setIfGameEnd] = useState(false)
     const [winnerNickname, setWinnerNickname] = useState<string>('')
 
+    
+    const leaveTheGame = () => {
+        const data = {
+            roomId: window.localStorage.getItem('roomId'),
+            playerId: Number(window.localStorage.getItem('playerId')),
+            isOwner: window.localStorage.getItem('owner') || false
+        }
+        socket.emit('player-leave', data)
+        window.localStorage.clear()
+    }
+
+    window.addEventListener('beforeunload', ()=>{leaveTheGame()})
     useEffect(()=>{
         socket.on('game-end', (player:any)=>{
             if(player){
