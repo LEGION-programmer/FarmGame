@@ -5,25 +5,19 @@ import cors from 'cors'
 import { Server } from 'socket.io'
 import bodyParser from 'body-parser'
 const app = express()
-/*const corsOptions = {
+const corsOptions = {
     origin: 'https://main--farm-game-multiplayer.netlify.app',
     methods: ["POST", "GET", "PUT"],
     credentials: true
-}*/
-app.use(cors())
-
-
-
-
+}
+app.use(cors(corsOptions))
 
 app.use(bodyParser.text)
 app.use(bodyParser.json)
 const server = http.createServer(app)
 
 const io = new Server(server, {
-    cors: {origin: 'https://main--farm-game-multiplayer.netlify.app',
-    methods: ["POST", "GET", "PUT"],
-    credentials: true}
+    cors: corsOptions
 })
 import User from './actions/createUser'
 import UserActions from './actions/userActions'
