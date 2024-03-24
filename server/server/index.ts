@@ -11,7 +11,7 @@ const app = express()
 const port = process.env.PORT || 3001
 
 const corsOptions = {
-    origin: 'https://main--farm-game-multiplayer.netlify.app',
+    origin: 'https://farm-game-multiplayer.netlify.app',
     methods: ["POST", "GET", "PUT"],
     credentials: true
 }
