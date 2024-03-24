@@ -34,7 +34,7 @@ const PlayerActions = () => {
         setPassActive(true)
         setDiceActive(false)
         const data = {
-            rollResult: ['rabbit', 'rabbit'], 
+            rollResult: res, 
             roomId: window.localStorage.getItem('roomId'),
             playerId: Number(window.localStorage.getItem('playerId'))
         }
