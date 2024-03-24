@@ -1,13 +1,7 @@
-import express from 'express'
-import http from 'http'
-import cors from 'cors'
-import { Server } from 'socket.io'
-import bodyParser from 'body-parser'
 import User from './actions/createUser'
 import UserActions from './actions/userActions'
 import { rooms, players, playersInGame, findPlayer, addAnimals, changeTour, 
     exchangeAnimals, gameEnd } from './actions/operations' 
-const app = express()
 const port = process.env.PORT || 3001
 import { server, io } from './serverSettings/serverSettings'
 
