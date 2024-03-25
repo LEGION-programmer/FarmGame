@@ -1,5 +1,5 @@
 import io from "socket.io-client"
-
-const socket = io("https://farmgame.onrender.com")
+const url = process.env.REACT_APP_SERVER_URL || 'http://localhost:3001'
+const socket = io(url)
 
 export default socket
