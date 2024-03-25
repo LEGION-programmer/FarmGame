@@ -4,11 +4,12 @@ import cors from 'cors'
 import { Server } from 'socket.io'
 import bodyParser from 'body-parser'
 const app = express()
+require('dotenv').config()
 
 export const server = http.createServer(app)
 
 const corsOptions = {
-    origin: 'https://farm-game-multiplayer.netlify.app',
+    origin: process.env.CORS_URL,
     methods: ["POST", "GET", "PUT"],
     credentials: true
 }
