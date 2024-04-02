@@ -1,6 +1,6 @@
 import { findPlayer } from "../actions/operations"
 import UserActions from "../actions/userActions"
-const player1 = new UserActions(1, "Gracz 1", 0, 0, 0, 0, 0, false, false, false, false, false)
+const player1 = new UserActions(1, "Player1", 0, 0, 0, 0, 0, false, false, false, false, false)
 
 
 const playersInGame: Map<string, Array<UserActions>> = new Map()
